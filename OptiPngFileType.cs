@@ -32,7 +32,7 @@ namespace ILikePi.FileTypes.OptiPng {
     }
 
     internal class OptiPngFileType : FileType<OptiPngSaveConfigToken, OptiPngSaveConfigWidget> {
-        private string tempFile;
+        private readonly string tempFile;
         private OptiPngSaveConfigToken tempFileToken;
         private Surface tempFileSurface;
         private static readonly string OptiPNGPath = InitOptiPNGPath();
@@ -74,7 +74,7 @@ namespace ILikePi.FileTypes.OptiPng {
                 if (tempFileSurface != null) {
                     tempFileSurface.Dispose();
                 }
-                tempFileSurface = (Surface)scratchSurface.Clone();
+                tempFileSurface = scratchSurface.Clone();
 
                 // Color reductions
                 if (token.Color == ColorMode.Grayscale || token.Color == ColorMode.RGB) {
@@ -119,7 +119,7 @@ namespace ILikePi.FileTypes.OptiPng {
 
                 // Optimize if user wants it
                 if (token.Optimize) {
-                    string args = string.Format("\"{0}\" -o{1} -i{2}{3}", tempFile, token.Compression, token.Interlace ? "1" : "0", token.Quiet ? " -quiet" : string.Empty);
+                    string args = $"\"{tempFile}\" -o{token.Compression} -i{(token.Interlace ? "1" : "0")}{(token.Quiet ? " -quiet" : string.Empty)}";
                     ProcessStartInfo startInfo = new ProcessStartInfo(OptiPNGPath, args);
                     if (token.Quiet)
                     {
@@ -163,7 +163,7 @@ namespace ILikePi.FileTypes.OptiPng {
             }
         }
 
-        private unsafe void eliminateAlphaChannel(Surface surface, bool multByAlpha) {
+        private static unsafe void eliminateAlphaChannel(Surface surface, bool multByAlpha) {
             BinaryPixelOp blendOp = new UserBlendOps.NormalBlendOp();
             for (int y = 0; y < surface.Height; y++) {
                 ColorBgra* ptr = surface.GetRowAddressUnchecked(y);
@@ -200,7 +200,7 @@ namespace ILikePi.FileTypes.OptiPng {
             return Quantize(surface, ditheringLevel, 256, true, progressCallback);
         }
 
-        private unsafe bool areSurfacesEqual(Surface a, Surface b) {
+        private static unsafe bool areSurfacesEqual(Surface a, Surface b) {
             if (a == null || b == null) {
                 return false;
             }

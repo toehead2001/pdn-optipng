@@ -55,8 +55,10 @@ namespace PaintDotNet
             {
                 if (this.label == null)
                 {
-                    this.label = new Label();
-                    this.label.BorderStyle = BorderStyle.Fixed3D;
+                    this.label = new Label
+                    {
+                        BorderStyle = BorderStyle.Fixed3D
+                    };
                 }
 
                 SuspendLayout();

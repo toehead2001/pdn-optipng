@@ -125,7 +125,6 @@ namespace PaintDotNet
                 e.Graphics.FillRectangle(backBrush, e.ClipRectangle);
             }
 
-            Size textSize = GetTextSize();
             TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Point(this.leftMargin, 0), this.ForeColor, textFormatFlags);
 
             base.OnPaint(e);
