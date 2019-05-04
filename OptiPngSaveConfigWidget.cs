@@ -16,26 +16,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using PaintDotNet;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
-using PaintDotNet;
 
-namespace ILikePi.FileTypes.OptiPng {
-    internal partial class OptiPngSaveConfigWidget : SaveConfigWidget<OptiPngFileType, OptiPngSaveConfigToken> {
-        protected override OptiPngSaveConfigToken CreateTokenFromWidget() {
+namespace ILikePi.FileTypes.OptiPng
+{
+    internal partial class OptiPngSaveConfigWidget : SaveConfigWidget<OptiPngFileType, OptiPngSaveConfigToken>
+    {
+        protected override OptiPngSaveConfigToken CreateTokenFromWidget()
+        {
             OptiPngSaveConfigToken token = new OptiPngSaveConfigToken();
 
-            if (grayscale.Checked) {
+            if (grayscale.Checked)
+            {
                 token.Color = ColorMode.Grayscale;
-            } else if (rgb.Checked) {
+            }
+            else if (rgb.Checked)
+            {
                 token.Color = ColorMode.RGB;
-            } else if (palette.Checked) {
+            }
+            else if (palette.Checked)
+            {
                 token.Color = ColorMode.Palette;
-            } else if (grayscaleA.Checked) {
+            }
+            else if (grayscaleA.Checked)
+            {
                 token.Color = ColorMode.GrayscaleAlpha;
-            } else if (rgbA.Checked) {
+            }
+            else if (rgbA.Checked)
+            {
                 token.Color = ColorMode.RGBAlpha;
             }
 
@@ -50,8 +62,10 @@ namespace ILikePi.FileTypes.OptiPng {
             return token;
         }
 
-        protected override void InitWidgetFromToken(OptiPngSaveConfigToken sourceToken) {
-            switch (sourceToken.Color) {
+        protected override void InitWidgetFromToken(OptiPngSaveConfigToken sourceToken)
+        {
+            switch (sourceToken.Color)
+            {
                 case ColorMode.Grayscale:
                     grayscale.Checked = true;
                     break;
@@ -80,13 +94,16 @@ namespace ILikePi.FileTypes.OptiPng {
             enforceDependencies();
         }
 
-        private void tokenChanged(object sender, EventArgs e) {
+        private void tokenChanged(object sender, EventArgs e)
+        {
             enforceDependencies();
             UpdateToken();
         }
 
-        private void compression_ValueChanged(object sender, EventArgs e) {
-            switch ((byte)compression.Value) {
+        private void compression_ValueChanged(object sender, EventArgs e)
+        {
+            switch ((byte)compression.Value)
+            {
                 case 1:
                     compressionComment.Text = "Heuristics (1 trial)";
                     break;
@@ -111,18 +128,26 @@ namespace ILikePi.FileTypes.OptiPng {
             }
         }
 
-        private void optiPng_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
+        private void optiPng_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
                 Process.Start("http://optipng.sourceforge.net/");
-            } catch (Win32Exception) {
+            }
+            catch (Win32Exception)
+            {
                 // Sometimes windows says file not found when Firefox takes too long to open
             }
         }
 
-        private void enforceDependencies() {
-            if (rgb.Checked || grayscale.Checked) {
+        private void enforceDependencies()
+        {
+            if (rgb.Checked || grayscale.Checked)
+            {
                 multiplyByAlpha.Enabled = true;
-            } else {
+            }
+            else
+            {
                 multiplyByAlpha.Checked = false;
                 multiplyByAlpha.Enabled = false;
             }
@@ -132,11 +157,14 @@ namespace ILikePi.FileTypes.OptiPng {
             transThresh.Enabled = palette.Checked;
             transThreshLabel.Enabled = palette.Checked;
 
-            if (optimize.Checked) {
+            if (optimize.Checked)
+            {
                 interlace.Enabled = true;
                 compression.Enabled = true;
                 compressionComment.Enabled = true;
-            } else {
+            }
+            else
+            {
                 interlace.Checked = false;
                 interlace.Enabled = false;
                 compression.Enabled = false;

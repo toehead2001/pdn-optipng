@@ -16,11 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System;
 using PaintDotNet;
+using System;
 
-namespace ILikePi.FileTypes.OptiPng {
-    internal enum ColorMode {
+namespace ILikePi.FileTypes.OptiPng
+{
+    internal enum ColorMode
+    {
         Grayscale,
         RGB,
         Palette,
@@ -29,11 +31,13 @@ namespace ILikePi.FileTypes.OptiPng {
     }
 
     [Serializable]
-    internal class OptiPngSaveConfigToken : SaveConfigToken {
+    internal class OptiPngSaveConfigToken : SaveConfigToken
+    {
         private byte compression;
         private byte ditheringLevel;
 
-        public OptiPngSaveConfigToken() {
+        public OptiPngSaveConfigToken()
+        {
             Color = ColorMode.RGBAlpha;
             Compression = 2;
             DitheringLevel = 7;
@@ -44,18 +48,22 @@ namespace ILikePi.FileTypes.OptiPng {
             Quiet = true;
         }
 
-        public override object Clone() {
+        public override object Clone()
+        {
             return MemberwiseClone();
         }
 
-        public override void Validate() {
+        public override void Validate()
+        {
             validateCompression(compression);
             validateDitheringLevel(ditheringLevel);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             OptiPngSaveConfigToken token = obj as OptiPngSaveConfigToken;
-            if (token == null) {
+            if (token == null)
+            {
                 return false;
             }
             return token.Color == Color
@@ -68,27 +76,34 @@ namespace ILikePi.FileTypes.OptiPng {
                 && token.Quiet == Quiet;
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return (int)Color + compression * 3 + ditheringLevel * 7;
         }
 
         public ColorMode Color { get; set; }
 
-        public byte Compression {
-            get {
+        public byte Compression
+        {
+            get
+            {
                 return compression;
             }
-            set {
+            set
+            {
                 validateCompression(value);
                 compression = value;
             }
         }
 
-        public byte DitheringLevel {
-            get {
+        public byte DitheringLevel
+        {
+            get
+            {
                 return ditheringLevel;
             }
-            set {
+            set
+            {
                 validateDitheringLevel(value);
                 ditheringLevel = value;
             }
@@ -104,14 +119,18 @@ namespace ILikePi.FileTypes.OptiPng {
 
         public bool Quiet { get; set; }
 
-        private void validateCompression(byte value) {
-            if (value > 7 || value < 1) {
+        private void validateCompression(byte value)
+        {
+            if (value > 7 || value < 1)
+            {
                 throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void validateDitheringLevel(byte value) {
-            if (value > 8 || value < 0) {
+        private void validateDitheringLevel(byte value)
+        {
+            if (value > 8 || value < 0)
+            {
                 throw new ArgumentOutOfRangeException();
             }
         }

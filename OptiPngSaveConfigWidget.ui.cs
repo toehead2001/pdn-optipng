@@ -16,12 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using PaintDotNet;
 using System;
 using System.Windows.Forms;
-using PaintDotNet;
 
-namespace ILikePi.FileTypes.OptiPng {
-    internal partial class OptiPngSaveConfigWidget {
+namespace ILikePi.FileTypes.OptiPng
+{
+    internal partial class OptiPngSaveConfigWidget
+    {
         private static readonly Padding firstIndent = new Padding(0, 0, 0, 0);
         private static readonly Padding secondIndent = new Padding(16, 0, 0, 0);
         private readonly int NUD_WIDTH = 50;
@@ -46,12 +48,14 @@ namespace ILikePi.FileTypes.OptiPng {
         private LinkLabel optiPng;
 
         public OptiPngSaveConfigWidget()
-            : base(new OptiPngFileType()) {
+            : base(new OptiPngFileType())
+        {
             AutoSize = true;
 
             NUD_WIDTH = (int)(NUD_WIDTH * this.AutoScaleDimensions.Width / 96f);
 
-            TableLayoutPanel main = new TableLayoutPanel {
+            TableLayoutPanel main = new TableLayoutPanel
+            {
                 Dock = DockStyle.Fill,
                 AutoSize = true
             };
@@ -60,7 +64,8 @@ namespace ILikePi.FileTypes.OptiPng {
             initColors(toolTip, main);
             initCompression(toolTip, main);
 
-            optiPng = new LinkLabel {
+            optiPng = new LinkLabel
+            {
                 AutoSize = true,
                 LinkArea = new LinkArea(11, 7),
                 Margin = new Padding(3, 10, 0, 0),
@@ -74,7 +79,8 @@ namespace ILikePi.FileTypes.OptiPng {
             Controls.Add(main);
         }
 
-        private void initColors(ToolTip toolTip, TableLayoutPanel main) {
+        private void initColors(ToolTip toolTip, TableLayoutPanel main)
+        {
             HeaderLabel colorHeader = newHeader("Color reduction");
             main.Controls.Add(colorHeader);
 
@@ -106,13 +112,15 @@ namespace ILikePi.FileTypes.OptiPng {
             palette.CheckedChanged += tokenChanged;
             main.Controls.Add(palette);
 
-            TableLayoutPanel dithering = new TableLayoutPanel {
+            TableLayoutPanel dithering = new TableLayoutPanel
+            {
                 Dock = DockStyle.Fill,
                 AutoSize = true,
                 Margin = secondIndent
             };
 
-            ditheringLabel = new Label {
+            ditheringLabel = new Label
+            {
                 Anchor = AnchorStyles.Left,
                 AutoSize = true,
                 Text = "&Dithering level:",
@@ -120,7 +128,8 @@ namespace ILikePi.FileTypes.OptiPng {
             };
             dithering.Controls.Add(ditheringLabel, 0, 0);
 
-            ditheringLevel = new NumericUpDown {
+            ditheringLevel = new NumericUpDown
+            {
                 Width = NUD_WIDTH,
                 Margin = Padding.Empty,
                 Maximum = 8
@@ -128,7 +137,8 @@ namespace ILikePi.FileTypes.OptiPng {
             ditheringLevel.ValueChanged += tokenChanged;
             dithering.Controls.Add(ditheringLevel, 1, 0);
 
-            transThreshLabel = new Label {
+            transThreshLabel = new Label
+            {
                 Anchor = AnchorStyles.Left,
                 AutoSize = true,
                 Text = "&Transparency threshold:",
@@ -136,7 +146,8 @@ namespace ILikePi.FileTypes.OptiPng {
             };
             dithering.Controls.Add(transThreshLabel, 0, 1);
 
-            transThresh = new NumericUpDown {
+            transThresh = new NumericUpDown
+            {
                 Width = NUD_WIDTH,
                 Margin = new Padding(0, 3, 0, 0),
                 Maximum = 255
@@ -162,7 +173,8 @@ namespace ILikePi.FileTypes.OptiPng {
             main.Controls.Add(rgbA);
         }
 
-        private void initCompression(ToolTip toolTip, TableLayoutPanel main) {
+        private void initCompression(ToolTip toolTip, TableLayoutPanel main)
+        {
             HeaderLabel compressionHeader = newHeader("Compression");
             main.Controls.Add(compressionHeader);
 
@@ -174,13 +186,15 @@ namespace ILikePi.FileTypes.OptiPng {
             optimize.CheckedChanged += tokenChanged;
             main.Controls.Add(optimize);
 
-            TableLayoutPanel compressionPanel = new TableLayoutPanel {
+            TableLayoutPanel compressionPanel = new TableLayoutPanel
+            {
                 Dock = DockStyle.Fill,
                 AutoSize = true,
                 Margin = firstIndent
             };
 
-            compression = new NumericUpDown {
+            compression = new NumericUpDown
+            {
                 Width = NUD_WIDTH,
                 Maximum = 7,
                 Minimum = 1,
@@ -192,7 +206,8 @@ namespace ILikePi.FileTypes.OptiPng {
             compression.ValueChanged += compression_ValueChanged;
             compressionPanel.Controls.Add(compression, 0, 0);
 
-            compressionComment = new Label {
+            compressionComment = new Label
+            {
                 Anchor = AnchorStyles.Left,
                 AutoSize = true,
                 Margin = Padding.Empty
@@ -204,9 +219,9 @@ namespace ILikePi.FileTypes.OptiPng {
             interlace = createBaseChkBox();
             interlace.Text = "&Interlace";
             interlace.Margin = firstIndent;
-            toolTip.SetToolTip(interlace, "Allows browsers to display low detail versions of an image first and improve the detail as more is downloaded.\n" + 
+            toolTip.SetToolTip(interlace, "Allows browsers to display low detail versions of an image first and improve the detail as more is downloaded.\n" +
                                           "Turning this on generally increases the file size.");
-            interlace.CheckedChanged += tokenChanged;    
+            interlace.CheckedChanged += tokenChanged;
             main.Controls.Add(interlace);
 
             quiet = createBaseChkBox();
@@ -217,20 +232,26 @@ namespace ILikePi.FileTypes.OptiPng {
             main.Controls.Add(quiet);
         }
 
-        private RadioButton createBaseRadioBtn() {
-            return new RadioButton {
+        private RadioButton createBaseRadioBtn()
+        {
+            return new RadioButton
+            {
                 AutoSize = true
             };
         }
 
-        private CheckBox createBaseChkBox() {
-            return new CheckBox {
+        private CheckBox createBaseChkBox()
+        {
+            return new CheckBox
+            {
                 AutoSize = true
             };
         }
 
-        private HeaderLabel newHeader(string text) {
-            return new HeaderLabel {
+        private HeaderLabel newHeader(string text)
+        {
+            return new HeaderLabel
+            {
                 Dock = DockStyle.Fill,
                 Text = text
             };
