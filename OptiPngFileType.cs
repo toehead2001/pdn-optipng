@@ -90,6 +90,30 @@ namespace ILikePi.FileTypes.OptiPng {
                 } else {
                     final = scratchSurface.CreateAliasedBitmap();
                 }
+
+                float dpiX;
+                float dpiY;
+
+                switch (input.DpuUnit)
+                {
+                    case MeasurementUnit.Centimeter:
+                        dpiX = (float)Document.DotsPerCmToDotsPerInch(input.DpuX);
+                        dpiY = (float)Document.DotsPerCmToDotsPerInch(input.DpuY);
+                        break;
+
+                    case MeasurementUnit.Inch:
+                        dpiX = (float)input.DpuX;
+                        dpiY = (float)input.DpuY;
+                        break;
+
+                    default:
+                    case MeasurementUnit.Pixel:
+                        dpiX = 1.0f;
+                        dpiY = 1.0f;
+                        break;
+                }
+
+                final.SetResolution(dpiX, dpiY);
                 final.Save(tempFile, ImageFormat.Png);
                 final.Dispose();
 
