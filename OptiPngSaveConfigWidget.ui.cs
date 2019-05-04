@@ -16,14 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Windows.Forms;
 using PaintDotNet;
 
 namespace ILikePi.FileTypes.OptiPng {
     internal partial class OptiPngSaveConfigWidget {
-        private static readonly Padding firstIndent = new Padding(8, 0, 0, 0);
-        private static readonly Padding secondIndent = new Padding(23, 0, 0, 0);
-        private const int NUD_WIDTH = 50;
+        private static readonly Padding firstIndent = new Padding(0, 0, 0, 0);
+        private static readonly Padding secondIndent = new Padding(16, 0, 0, 0);
+        private readonly int NUD_WIDTH = 50;
 
         private RadioButton grayscale;
         private RadioButton rgb;
@@ -42,9 +43,13 @@ namespace ILikePi.FileTypes.OptiPng {
         private CheckBox interlace;
         private CheckBox quiet;
 
+        private LinkLabel optiPng;
+
         public OptiPngSaveConfigWidget()
             : base(new OptiPngFileType()) {
             AutoSize = true;
+
+            NUD_WIDTH = (int)(NUD_WIDTH * this.AutoScaleDimensions.Width / 96f);
 
             TableLayoutPanel main = new TableLayoutPanel {
                 Dock = DockStyle.Fill,
@@ -55,7 +60,7 @@ namespace ILikePi.FileTypes.OptiPng {
             initColors(toolTip, main);
             initCompression(toolTip, main);
 
-            LinkLabel optiPng = new LinkLabel {
+            optiPng = new LinkLabel {
                 AutoSize = true,
                 LinkArea = new LinkArea(11, 7),
                 Margin = new Padding(3, 10, 0, 0),
@@ -214,15 +219,13 @@ namespace ILikePi.FileTypes.OptiPng {
 
         private RadioButton createBaseRadioBtn() {
             return new RadioButton {
-                AutoSize = true,
-                FlatStyle = FlatStyle.System
+                AutoSize = true
             };
         }
 
         private CheckBox createBaseChkBox() {
             return new CheckBox {
-                AutoSize = true,
-                FlatStyle = FlatStyle.System
+                AutoSize = true
             };
         }
 
@@ -231,6 +234,13 @@ namespace ILikePi.FileTypes.OptiPng {
                 Dock = DockStyle.Fill,
                 Text = text
             };
+        }
+
+        protected override void OnForeColorChanged(EventArgs e)
+        {
+            base.OnForeColorChanged(e);
+
+            optiPng.LinkColor = ForeColor;
         }
     }
 }

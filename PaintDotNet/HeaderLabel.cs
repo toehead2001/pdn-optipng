@@ -25,7 +25,7 @@ namespace PaintDotNet
             TextFormatFlags.NoPrefix | 
             TextFormatFlags.SingleLine;
 
-        private int leftMargin = 2;
+        private int leftMargin = 0;
         private int rightMargin = 8;
 
         private EtchedLine etchedLine;
@@ -68,7 +68,6 @@ namespace PaintDotNet
             SetStyle(ControlStyles.Selectable, false);
             UI.InitScaling(null);
             TabStop = false;
-            ForeColor = SystemColors.Highlight;
             DoubleBuffered = true;
             ResizeRedraw = true;
 
@@ -108,6 +107,8 @@ namespace PaintDotNet
         {
             Size textSize = GetTextSize();
 
+            Size = new Size(Size.Width, textSize.Height);
+
             int lineLeft = (string.IsNullOrEmpty(this.Text) ? 0 : this.leftMargin) + textSize.Width + (string.IsNullOrEmpty(this.Text) ? 0 : 1);
             int lineRight = ClientRectangle.Right - this.rightMargin;
 
@@ -125,7 +126,7 @@ namespace PaintDotNet
             }
 
             Size textSize = GetTextSize();
-            TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Point(this.leftMargin, 0), SystemColors.WindowText, textFormatFlags);
+            TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Point(this.leftMargin, 0), this.ForeColor, textFormatFlags);
 
             base.OnPaint(e);
         }
