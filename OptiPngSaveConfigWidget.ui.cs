@@ -101,7 +101,8 @@ namespace ILikePi.FileTypes.OptiPng
             multiplyByAlpha = createBaseChkBox();
             multiplyByAlpha.Text = "&Умножение на альфа-канал";
             multiplyByAlpha.Margin = secondIndent;
-            toolTip.SetToolTip(multiplyByAlpha, "Для цветовых режимов которая не поддерживают альфа-канал, умножить на альфа-канал");
+            toolTip.SetToolTip(multiplyByAlpha, "Для цветовых режимов которая не поддерживают альфа-канал,\n" +
+                                                "умножить на альфа-канал");
             multiplyByAlpha.CheckedChanged += tokenChanged;
             main.Controls.Add(multiplyByAlpha);
 
