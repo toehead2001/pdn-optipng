@@ -48,7 +48,7 @@ namespace ILikePi.FileTypes.OptiPng
         }
 
         internal OptiPngFileType()
-            : base("Optimized PNG", FileTypeFlags.SupportsLoading | FileTypeFlags.SupportsSaving, new[] { ".png" })
+            : base("Оптимизированный PNG", FileTypeFlags.SupportsLoading | FileTypeFlags.SupportsSaving, new[] { ".png" })
         {
             string path = Path.Combine(Path.GetTempPath(), "PDN_OptiPNG_");
             Random rnd = new Random();
