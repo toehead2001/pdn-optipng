@@ -105,25 +105,25 @@ namespace ILikePi.FileTypes.OptiPng
             switch ((byte)compression.Value)
             {
                 case 1:
-                    compressionComment.Text = "Heuristics (1 trial)";
+                    compressionComment.Text = "Эвристика (1 проход)";
                     break;
                 case 2:
-                    compressionComment.Text = "8 trials";
+                    compressionComment.Text = "8 проходов";
                     break;
                 case 3:
-                    compressionComment.Text = "16 trials";
+                    compressionComment.Text = "16 проходов";
                     break;
                 case 4:
-                    compressionComment.Text = "24 trials";
+                    compressionComment.Text = "24 проходов";
                     break;
                 case 5:
-                    compressionComment.Text = "48 trials";
+                    compressionComment.Text = "48 проходов";
                     break;
                 case 6:
-                    compressionComment.Text = "120 trials";
+                    compressionComment.Text = "120 проходов";
                     break;
                 case 7:
-                    compressionComment.Text = "240 trials";
+                    compressionComment.Text = "240 проходов";
                     break;
             }
         }
