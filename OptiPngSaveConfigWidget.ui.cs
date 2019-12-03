@@ -87,7 +87,7 @@ namespace ILikePi.FileTypes.OptiPng
             grayscale = createBaseRadioBtn();
             grayscale.Text = "&Оттенки серого";
             grayscale.Margin = firstIndent;
-            toolTip.SetToolTip(grayscale, "Черный/белый без прозрачности");
+            toolTip.SetToolTip(grayscale, "Черно-белый без прозрачности");
             grayscale.CheckedChanged += tokenChanged;
             main.Controls.Add(grayscale);
 
@@ -162,7 +162,7 @@ namespace ILikePi.FileTypes.OptiPng
             grayscaleA = createBaseRadioBtn();
             grayscaleA.Text = "Оттенки серого с альфа";
             grayscaleA.Margin = firstIndent;
-            toolTip.SetToolTip(grayscaleA, "Черный белый с прозрачностью");
+            toolTip.SetToolTip(grayscaleA, "Черно-белый с прозрачностью");
             grayscaleA.CheckedChanged += tokenChanged;
             main.Controls.Add(grayscaleA);
 
