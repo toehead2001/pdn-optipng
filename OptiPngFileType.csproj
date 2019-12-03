@@ -16,6 +16,9 @@
     <DebugType>pdbonly</DebugType>
     <DefineConstants />
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
+    <DefineConstants>LEGACY</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove=".gitattributes" />
     <None Remove=".gitignore" />

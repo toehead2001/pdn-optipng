@@ -48,7 +48,11 @@ namespace ILikePi.FileTypes.OptiPng
         }
 
         internal OptiPngFileType()
+#if LEGACY
             : base("Optimized PNG", FileTypeFlags.SupportsLoading | FileTypeFlags.SupportsSaving, new[] { ".png" })
+#else
+            : base("Optimized PNG", new FileTypeOptions { SaveExtensions = new string[] { ".png" } })
+#endif
         {
             string path = Path.Combine(Path.GetTempPath(), "PDN_OptiPNG_");
             Random rnd = new Random();
