@@ -61,19 +61,19 @@ namespace ILikePi.FileTypes.OptiPng
 
         public override bool Equals(object obj)
         {
-            OptiPngSaveConfigToken token = obj as OptiPngSaveConfigToken;
-            if (token == null)
+            if (obj is OptiPngSaveConfigToken token)
             {
-                return false;
+                return token.Color == Color
+                    && token.compression == compression
+                    && token.ditheringLevel == ditheringLevel
+                    && token.TransparencyThreshold == TransparencyThreshold
+                    && token.Interlace == Interlace
+                    && token.MultiplyByAlphaChannel == MultiplyByAlphaChannel
+                    && token.Optimize == Optimize
+                    && token.Quiet == Quiet;
             }
-            return token.Color == Color
-                && token.compression == compression
-                && token.ditheringLevel == ditheringLevel
-                && token.TransparencyThreshold == TransparencyThreshold
-                && token.Interlace == Interlace
-                && token.MultiplyByAlphaChannel == MultiplyByAlphaChannel
-                && token.Optimize == Optimize
-                && token.Quiet == Quiet;
+
+            return false;
         }
 
         public override int GetHashCode()
@@ -129,7 +129,7 @@ namespace ILikePi.FileTypes.OptiPng
 
         private void validateDitheringLevel(byte value)
         {
-            if (value > 8 || value < 0)
+            if (value > 8)
             {
                 throw new ArgumentOutOfRangeException();
             }

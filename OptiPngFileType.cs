@@ -39,23 +39,16 @@ namespace ILikePi.FileTypes.OptiPng
         private readonly string tempFile;
         private OptiPngSaveConfigToken tempFileToken;
         private Surface tempFileSurface;
-        private static readonly string OptiPNGPath = InitOptiPNGPath();
-
-        private static string InitOptiPNGPath()
-        {
-            string effectsDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return Path.Combine(effectsDir, "optipng.exe");
-        }
+        private static readonly string OptiPNGPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "optipng.exe");
 
         internal OptiPngFileType()
 #if LEGACY
             : base(L10nStrings.EffectName, FileTypeFlags.SupportsLoading | FileTypeFlags.SupportsSaving, new[] { ".png" })
 #else
-            : base(L10nStrings.EffectName, new FileTypeOptions { SaveExtensions = new string[] { ".png" }, LoadExtensions = new string[] { ".png" } })
+            : base(L10nStrings.EffectName, new FileTypeOptions { SaveExtensions = new[] { ".png" }, LoadExtensions = new[] { ".png" } })
 #endif
         {
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "optipng.exe");
-            if (!File.Exists(exePath))
+            if (!File.Exists(OptiPNGPath))
             {
                 throw new FileNotFoundException("Please ensure you've installed optipng.exe into the FileTypes folder.", "optipng.exe");
             }
@@ -93,10 +86,7 @@ namespace ILikePi.FileTypes.OptiPng
             if (!token.Equals(tempFileToken) || !areSurfacesEqual(scratchSurface, tempFileSurface))
             {
                 tempFileToken = (OptiPngSaveConfigToken)token.Clone();
-                if (tempFileSurface != null)
-                {
-                    tempFileSurface.Dispose();
-                }
+                tempFileSurface?.Dispose();
                 tempFileSurface = scratchSurface.Clone();
 
                 // Color reductions
@@ -109,15 +99,10 @@ namespace ILikePi.FileTypes.OptiPng
                 {
                     new UnaryPixelOps.Desaturate().Apply(scratchSurface, scratchSurface.Bounds);
                 }
-                Bitmap final;
-                if (token.Color == ColorMode.Palette)
-                {
-                    final = reduceToPalette(scratchSurface, token.DitheringLevel, token.TransparencyThreshold, progressCallback);
-                }
-                else
-                {
-                    final = scratchSurface.CreateAliasedBitmap();
-                }
+
+                Bitmap final = (token.Color == ColorMode.Palette)
+                    ? reduceToPalette(scratchSurface, token.DitheringLevel, token.TransparencyThreshold, progressCallback)
+                    : scratchSurface.CreateAliasedBitmap();
 
                 float dpiX;
                 float dpiY;
@@ -134,8 +119,8 @@ namespace ILikePi.FileTypes.OptiPng
                         dpiY = (float)input.DpuY;
                         break;
 
-                    default:
                     case MeasurementUnit.Pixel:
+                    default:
                         dpiX = 1.0f;
                         dpiY = 1.0f;
                         break;
@@ -165,12 +150,11 @@ namespace ILikePi.FileTypes.OptiPng
                         process.WaitForExit();
                     }
                 }
-
             }
+
             // Rewrite to target
             using (FileStream transfer = new FileStream(tempFile, FileMode.Open, FileAccess.Read))
             {
-
                 int bufferLength = (int)Math.Min(transfer.Length, 4096L);
                 byte[] buffer = new byte[bufferLength];
 
@@ -189,7 +173,6 @@ namespace ILikePi.FileTypes.OptiPng
 
                     remaining -= bytesRead;
                 } while (remaining > 0);
-
             }
         }
 
