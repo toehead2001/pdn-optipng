@@ -54,6 +54,12 @@ namespace ILikePi.FileTypes.OptiPng
             : base(L10nStrings.EffectName, new FileTypeOptions { SaveExtensions = new string[] { ".png" }, LoadExtensions = new string[] { ".png" } })
 #endif
         {
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "optipng.exe");
+            if (!File.Exists(exePath))
+            {
+                throw new FileNotFoundException("Please ensure you've installed optipng.exe into the FileTypes folder.", "optipng.exe");
+            }
+
             string path = Path.Combine(Path.GetTempPath(), "PDN_OptiPNG_");
             Random rnd = new Random();
             do
@@ -267,7 +273,10 @@ namespace ILikePi.FileTypes.OptiPng
 
         ~OptiPngFileType()
         {
-            File.Delete(tempFile);
+            if (File.Exists(tempFile))
+            {
+                File.Delete(tempFile);
+            }
         }
 
         protected override OptiPngSaveConfigToken OnCreateDefaultSaveConfigTokenT()
