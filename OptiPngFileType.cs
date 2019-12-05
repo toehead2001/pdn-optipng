@@ -51,7 +51,7 @@ namespace ILikePi.FileTypes.OptiPng
 #if LEGACY
             : base(L10nStrings.EffectName, FileTypeFlags.SupportsLoading | FileTypeFlags.SupportsSaving, new[] { ".png" })
 #else
-            : base(L10nStrings.EffectName, new FileTypeOptions { SaveExtensions = new string[] { ".png" } })
+            : base(L10nStrings.EffectName, new FileTypeOptions { SaveExtensions = new string[] { ".png" }, LoadExtensions = new string[] { ".png" } })
 #endif
         {
             string path = Path.Combine(Path.GetTempPath(), "PDN_OptiPNG_");
