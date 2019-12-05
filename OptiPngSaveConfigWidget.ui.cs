@@ -64,12 +64,14 @@ namespace ILikePi.FileTypes.OptiPng
             initColors(toolTip, main);
             initCompression(toolTip, main);
 
+            string poweredBy = L10nStrings.PoweredByOptiPNG;
+
             optiPng = new LinkLabel
             {
                 AutoSize = true,
-                LinkArea = new LinkArea(11, 7),
+                LinkArea = new LinkArea(poweredBy.Length - 7, 7),
                 Margin = new Padding(3, 10, 0, 0),
-                Text = "Powered by OptiPNG"
+                Text = poweredBy
             };
             optiPng.LinkClicked += optiPng_LinkClicked;
             main.Controls.Add(optiPng);
@@ -81,34 +83,34 @@ namespace ILikePi.FileTypes.OptiPng
 
         private void initColors(ToolTip toolTip, TableLayoutPanel main)
         {
-            HeaderLabel colorHeader = newHeader("Color reduction");
+            HeaderLabel colorHeader = newHeader(L10nStrings.ColorReduction);
             main.Controls.Add(colorHeader);
 
             grayscale = createBaseRadioBtn();
-            grayscale.Text = "&Grayscale";
+            grayscale.Text = L10nStrings.Grayscale;
             grayscale.Margin = firstIndent;
-            toolTip.SetToolTip(grayscale, "Black/white without transparency");
+            toolTip.SetToolTip(grayscale, L10nStrings.GrayscaleDescription);
             grayscale.CheckedChanged += tokenChanged;
             main.Controls.Add(grayscale);
 
             rgb = createBaseRadioBtn();
-            rgb.Text = "&RGB";
+            rgb.Text = L10nStrings.Rgb;
             rgb.Margin = firstIndent;
-            toolTip.SetToolTip(rgb, "RGB without transparency");
+            toolTip.SetToolTip(rgb, L10nStrings.RgbDescription);
             rgb.CheckedChanged += tokenChanged;
             main.Controls.Add(rgb);
 
             multiplyByAlpha = createBaseChkBox();
-            multiplyByAlpha.Text = "&Multiply by alpha channel";
+            multiplyByAlpha.Text = L10nStrings.MultiplyByAlpha;
             multiplyByAlpha.Margin = secondIndent;
-            toolTip.SetToolTip(multiplyByAlpha, "For color modes that do not support the alpha channel, multipy by the alpha channel");
+            toolTip.SetToolTip(multiplyByAlpha, L10nStrings.MultiplyByAlphaDescription);
             multiplyByAlpha.CheckedChanged += tokenChanged;
             main.Controls.Add(multiplyByAlpha);
 
             palette = createBaseRadioBtn();
-            palette.Text = "&Palette";
+            palette.Text = L10nStrings.Palette;
             palette.Margin = firstIndent;
-            toolTip.SetToolTip(palette, "No more than 256 distinct colors");
+            toolTip.SetToolTip(palette, L10nStrings.PaletteDescription);
             palette.CheckedChanged += tokenChanged;
             main.Controls.Add(palette);
 
@@ -123,7 +125,7 @@ namespace ILikePi.FileTypes.OptiPng
             {
                 Anchor = AnchorStyles.Left,
                 AutoSize = true,
-                Text = "&Dithering level:",
+                Text = L10nStrings.DitheringLevel,
                 Margin = Padding.Empty
             };
             dithering.Controls.Add(ditheringLabel, 0, 0);
@@ -141,7 +143,7 @@ namespace ILikePi.FileTypes.OptiPng
             {
                 Anchor = AnchorStyles.Left,
                 AutoSize = true,
-                Text = "&Transparency threshold:",
+                Text = L10nStrings.TransparencyThreshold,
                 Margin = Padding.Empty
             };
             dithering.Controls.Add(transThreshLabel, 0, 1);
@@ -152,37 +154,36 @@ namespace ILikePi.FileTypes.OptiPng
                 Margin = new Padding(0, 3, 0, 0),
                 Maximum = 255
             };
-            toolTip.SetToolTip(transThresh, "Pixels with an alpha value less than the threshold will be fully transparent.");
+            toolTip.SetToolTip(transThresh, L10nStrings.TransparencyThresholdDescription);
             transThresh.ValueChanged += tokenChanged;
             dithering.Controls.Add(transThresh, 1, 1);
 
             main.Controls.Add(dithering);
 
             grayscaleA = createBaseRadioBtn();
-            grayscaleA.Text = "Gr&ayscale with alpha";
+            grayscaleA.Text = L10nStrings.GrayScaleWithAlpha;
             grayscaleA.Margin = firstIndent;
-            toolTip.SetToolTip(grayscaleA, "Black/white with transparency");
+            toolTip.SetToolTip(grayscaleA, L10nStrings.GrayScaleWithAlphaDescription);
             grayscaleA.CheckedChanged += tokenChanged;
             main.Controls.Add(grayscaleA);
 
             rgbA = createBaseRadioBtn();
-            rgbA.Text = "RG&B with alpha";
+            rgbA.Text = L10nStrings.RgbWithAlpha;
             rgbA.Margin = firstIndent;
-            toolTip.SetToolTip(rgbA, "RGB with transparency (always lossless)");
+            toolTip.SetToolTip(rgbA, L10nStrings.RgbWithAlphaDescription);
             rgbA.CheckedChanged += tokenChanged;
             main.Controls.Add(rgbA);
         }
 
         private void initCompression(ToolTip toolTip, TableLayoutPanel main)
         {
-            HeaderLabel compressionHeader = newHeader("Compression");
+            HeaderLabel compressionHeader = newHeader(L10nStrings.Compression);
             main.Controls.Add(compressionHeader);
 
             optimize = createBaseChkBox();
-            optimize.Text = "&Optimize";
+            optimize.Text = L10nStrings.Optimize;
             optimize.Margin = firstIndent;
-            toolTip.SetToolTip(optimize, "Uncheck this if you just want to preview.\n" +
-                                         "You can safely end optimization by closing the console window.");
+            toolTip.SetToolTip(optimize, L10nStrings.OptimizeDescription);
             optimize.CheckedChanged += tokenChanged;
             main.Controls.Add(optimize);
 
@@ -200,8 +201,7 @@ namespace ILikePi.FileTypes.OptiPng
                 Minimum = 1,
                 Margin = Padding.Empty
             };
-            toolTip.SetToolTip(compression, "These are OptiPNG presets. They essentially tell OptiPNG how much brute force to use.\r\n" +
-                                            "Higher values may not always give smaller sizes if a lower preset already has optimal settings.");
+            toolTip.SetToolTip(compression, L10nStrings.CompressionDescription);
             compression.ValueChanged += tokenChanged;
             compression.ValueChanged += compression_ValueChanged;
             compressionPanel.Controls.Add(compression, 0, 0);
@@ -217,17 +217,16 @@ namespace ILikePi.FileTypes.OptiPng
             main.Controls.Add(compressionPanel);
 
             interlace = createBaseChkBox();
-            interlace.Text = "&Interlace";
+            interlace.Text = L10nStrings.Interlace;
             interlace.Margin = firstIndent;
-            toolTip.SetToolTip(interlace, "Allows browsers to display low detail versions of an image first and improve the detail as more is downloaded.\n" +
-                                          "Turning this on generally increases the file size.");
+            toolTip.SetToolTip(interlace, L10nStrings.InterlaceDescription);
             interlace.CheckedChanged += tokenChanged;
             main.Controls.Add(interlace);
 
             quiet = createBaseChkBox();
-            quiet.Text = "&Quiet mode";
+            quiet.Text = L10nStrings.QuietMode;
             quiet.Margin = firstIndent;
-            toolTip.SetToolTip(quiet, "With this check box checked optipng.exe will be launched in quiet mode.");
+            toolTip.SetToolTip(quiet, L10nStrings.QuietModeDescription);
             quiet.CheckedChanged += tokenChanged;
             main.Controls.Add(quiet);
         }
